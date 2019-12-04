@@ -1,22 +1,34 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3-alpine'
+        }
+    }
     environment {
         VERSION = readMavenPom().getVersion()
     }
     stages {
+        stage ('Maven: Compile source code') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage ('Maven: Run Unit Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
         stage ('Maven: Package Artifact Jar') {
             steps {
                 sh ('mvn clean install')
             }
         }
-
         stage ('Docker: Build Docker Image') {
             steps {
                 sh ('docker build -t microservice-java:${VERSION} .')
             }
         }
     }
-
     post {
         success {
             echo "Build Success"
