@@ -11,22 +11,22 @@ pipeline {
         VERSION = readMavenPom().getVersion()
     }
     stages {
-        stage ('Maven: Compile source code') {
+        stage ('Compile') {
             steps {
                 sh 'mvn clean compile'
             }
         }
-        stage ('Maven: Run Unit Tests') {
+        stage ('Unit Tests') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage ('Maven: Package Artifact Jar') {
+        stage ('Package Artifact Jar') {
             steps {
                 sh ('mvn clean install')
             }
         }
-        stage ('Docker: Build Docker Image') {
+        stage ('Build Docker Image') {
             steps {
                 sh ('docker build -t microservice-java:${VERSION} .')
             }
