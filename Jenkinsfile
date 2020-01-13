@@ -1,10 +1,5 @@
 #!groovy
 pipeline {
-    // agent {
-    //     docker {
-    //         image 'maven:3-alpine'
-    //     }
-    // }
     agent none
     stages {
         stage ('Compile') {
@@ -47,6 +42,20 @@ pipeline {
             }
             steps {
                 sh ('docker build -t microservice-java:${VERSION} .')
+            }
+        }
+        stage ('Publish Docker image') {
+            agent any
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'AWS_CREDENTIALS',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    sh "aws ecr get-login --no-include-email | awk '{printf $6}' | docker login -u AWS https://066203203749.dkr.ecr.eu-west-2.amazonaws.com --password-stdin"
+                    sh ('docker push 066203203749.dkr.ecr.eu-west-2.amazonaws.com/microservice-java:${VERSION}')
+                }
             }
         }
     }
