@@ -53,7 +53,7 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                    sh "aws ecr get-login --no-include-email | awk '{printf ${6}}' | docker login -u AWS https://066203203749.dkr.ecr.eu-west-2.amazonaws.com --password-stdin"
+                    sh ('aws ecr get-login --no-include-email | awk "{printf \$6}" | docker login -u AWS https://066203203749.dkr.ecr.eu-west-2.amazonaws.com --password-stdin')
                     sh ('docker push 066203203749.dkr.ecr.eu-west-2.amazonaws.com/microservice-java:${VERSION}')
                 }
             }
