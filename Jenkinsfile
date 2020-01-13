@@ -3,30 +3,45 @@ pipeline {
     // agent {
     //     docker {
     //         image 'maven:3-alpine'
-    //         args '-v /var/run/docker.sock:/var/run/docker.sock'
     //     }
     // }
-    agent any
+    agent none
     environment {
         VERSION = readMavenPom().getVersion()
     }
     stages {
         stage ('Compile') {
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh 'mvn clean compile'
             }
         }
         stage ('Unit Tests') {
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh 'mvn test'
             }
         }
         stage ('Package Artifact Jar') {
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh ('mvn clean install')
             }
         }
         stage ('Build Docker Image') {
+            agent any
             steps {
                 sh ('docker build -t microservice-java:${VERSION} .')
             }
