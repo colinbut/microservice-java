@@ -6,9 +6,6 @@ pipeline {
     //     }
     // }
     agent none
-    environment {
-        VERSION = readMavenPom().getVersion()
-    }
     stages {
         stage ('Compile') {
             agent {
@@ -42,6 +39,9 @@ pipeline {
         }
         stage ('Build Docker Image') {
             agent any
+            environment {
+                VERSION = readMavenPom().getVersion()
+            }
             steps {
                 sh ('docker build -t microservice-java:${VERSION} .')
             }
