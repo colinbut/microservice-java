@@ -18,6 +18,30 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<scm>
+		<developerConnection>scm:git:https://github.com/colinbut/microservice-java.git</developerConnection>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>artifactory-releases</id>
+			<name>64094a7911d7-releases</name>
+			<url>http://localhost:8081/artifactory/libs-release</url>
+		</repository>
+		<snapshotRepository>
+			<id>artifactory-snapshots</id><!-- id must match id in ~/.m2/settings.xml file -->
+			<url>http://localhost:8081/artifactory/libs-snapshots</url>
+		</snapshotRepository>
+		<!--		<repository>-->
+		<!--			<id>nexus-releases</id>&lt;!&ndash; id must match id in ~/.m2/settings.xml file &ndash;&gt;-->
+		<!--			<url>http://localhost:8081/repository/maven-releases</url>-->
+		<!--		</repository>-->
+		<!--        <snapshotRepository>-->
+		<!--            <id>nexus-snapshots</id>&lt;!&ndash; id must match id in ~/.m2/settings.xml file &ndash;&gt;-->
+		<!--			<url>http://localhost:8081/repository/maven-snapshots</url>-->
+		<!--        </snapshotRepository>-->
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

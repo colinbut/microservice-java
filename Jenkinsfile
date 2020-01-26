@@ -35,6 +35,17 @@ pipeline {
                 sh ('mvn clean install')
             }
         }
+        stage ('Tag Release') {
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            steps {
+                sh 'mvn --batch-mode release:clean release:prepare release:perform'
+            }
+        }
         stage ('Build Docker Image') {
             agent any
             environment {
