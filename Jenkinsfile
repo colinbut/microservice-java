@@ -57,9 +57,11 @@ pipeline {
         }
         stage ('Publish Docker image') {
             agent any
-            script {
-                docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
-                    docker.image('microservice-java:${VERSION}').push()
+            steps {
+                script {
+                    docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
+                        docker.image('microservice-java:${VERSION}').push()
+                    }
                 }
             }
         }
