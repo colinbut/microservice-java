@@ -56,12 +56,7 @@ pipeline {
             }
         }
         stage ('Publish Docker image') {
-            agent {
-                docker {
-                    image 'maven:3-alpine'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
+            agent any
             steps {
                 script {
                     docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
