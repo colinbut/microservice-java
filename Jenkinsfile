@@ -59,7 +59,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
+                    docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:AWS_CREDENTIALS') {
                         docker.image('microservice-java:${VERSION}').push()
                     }
                 }
