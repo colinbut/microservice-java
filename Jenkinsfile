@@ -56,7 +56,11 @@ pipeline {
             }
         }
         stage ('Publish Docker image') {
-            agent any
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
+            }
             steps {
                 script {
                     docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
