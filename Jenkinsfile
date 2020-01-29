@@ -61,7 +61,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
                         def version = readMavenPom().getVersion()
-                        docker.image('microservice-java:${version}').push()
+                        docker.image('microservice-java:1.0.0-SNAPSHOT').push()
                     }
                 }
             }
