@@ -59,7 +59,7 @@ pipeline {
             }
             steps {
                 script {
-                    if (${params.SemVerTagRelease} == true) {
+                    if ("${params.SemVerTagRelease}" == true) {
                         sh 'mvn --batch-mode release:clean release:prepare release:perform'
                     } else {
                         echo "SemVerTagRelease is false: Skipping tagging a release"
@@ -71,7 +71,7 @@ pipeline {
         stage('Publish Artifact') {
             steps {
                 script {
-                    if (${params.NonDockerBuild} == true) {
+                    if ("${params.NonDockerBuild}" == true) {
                         echo "Publishing to Nexus..."
                         pom = readMavenPom file: "pom.xml";
                         filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
@@ -112,7 +112,7 @@ pipeline {
             }
             steps {
                 script {
-                    if (${params.DockerBuild} == true) {
+                    if ("${params.DockerBuild}" == true) {
                         echo "Building a Docker image..."
                         sh ('docker build -t microservice-java:${VERSION} .')
                     } else {
@@ -125,7 +125,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    if (${params.DockerBuild} == true) {
+                    if ("${params.DockerBuild}" == true) {
                         docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
                             def version = readMavenPom().getVersion()
                             docker.image('microservice-java:1.0.0-SNAPSHOT').push()
