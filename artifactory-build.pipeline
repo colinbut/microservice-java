@@ -51,7 +51,7 @@ pipeline {
                     tool: "Maven 3.6.0",
                     pom: "pom.xml",
                     goals: "clean install -DskipTests=true",
-                    resolverId: 'resolver-unique-id'
+                    resolverId: 'resolver-unique-id',
                     deployerId: 'deployer-unique-id'
                 )
                 
