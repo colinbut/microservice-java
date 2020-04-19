@@ -19,7 +19,7 @@ pipeline {
                 sh ('./mvnw clean package -Dmaven.test.skip=true')
             }
         }
-        stage ('Static Code Analysis: SonarQube) {
+        stage ('Static Code Analysis: SonarQube') {
             steps {
                 withSonarQubeEnv(credentialsId: 'sonarqube-credentials', installationName: 'MySonarQubeServer') {
                     sh './mvnw sonar:sonar'
