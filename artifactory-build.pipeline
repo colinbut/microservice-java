@@ -33,19 +33,13 @@ pipeline {
         stage('Publish Artifact to Artifactory') {
             steps {
                 rtBuildInfo(captureEnv: true)
-                rtUpload(
-                    serverId: 'ART',
-                    spec: '''{
-                        "files" : [
-                            {
-                                "pattern":"",
-                                "target": "libs-snapshot-local"
-                            }
-                        ]
-                    }'''
-                )
-                rtPublishBuildInfo(serverId: 'ART')
 
+                rtMavenResolver (
+                    id: 'resolver-unique-id',
+                    serverId: 'ART',
+                    releaseRepo: 'libs-release',
+                    snapshotRepo: 'libs-snapshot'
+                )
                 rtMavenDeployer(
                     id: 'deployer-unique-id',
                     serverId: 'ART',
@@ -59,6 +53,9 @@ pipeline {
                     goals: "clean install -DskipTests=true",
                     deployerId: 'deployer-unique-id'
                 )
+                
+                rtPublishBuildInfo(serverId: 'ART')
+
             }
         }
     }
