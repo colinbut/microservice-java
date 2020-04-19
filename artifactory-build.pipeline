@@ -33,17 +33,17 @@ pipeline {
         stage('Publish Artifact to Artifactory') {
             steps {
                 rtBuildInfo(captureEnv: true)
-                //rtUpload(
-                //    serverId: 'ART',
-                //    spec: '''{
-                //        "files" : [
-                //            {
-                //                "pattern":"*",
-                //                "target": "libs-snapshot-local"
-                //            }
-                //        ]
-                //    }'''
-                //)
+                rtUpload(
+                    serverId: 'ART',
+                    spec: '''{
+                        "files" : [
+                            {
+                                "pattern":"",
+                                "target": "libs-snapshot-local"
+                            }
+                        ]
+                    }'''
+                )
                 rtPublishBuildInfo(serverId: 'ART')
 
                 rtMavenDeployer(
