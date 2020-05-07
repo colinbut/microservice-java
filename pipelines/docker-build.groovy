@@ -13,7 +13,7 @@ pipeline {
         }
         stage ('Package Artifact Jar') {
             steps {
-                sh ('mvn clean package -Dmaven.test.skip=true')
+                sh ('./mvnw clean package -Dmaven.test.skip=true')
             }
         }
         stage ('Build Docker Image') {
