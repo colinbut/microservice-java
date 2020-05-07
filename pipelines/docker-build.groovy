@@ -30,7 +30,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://066203203749.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:AWS_CREDENTIALS') {
                         def COMMIT_ID = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                        docker.image('microservice-java:${COMMIT_ID}').push()
+                        docker.image("microservice-java:${COMMIT_ID}").push()
                     }
                 }
             }
